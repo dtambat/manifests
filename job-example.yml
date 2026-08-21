@@ -1,1 +1,36 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: job-example
+  annotations:
+    argocd.argoproj.io/sync-wave: "8"
+    argocd.argoproj.io/sync-options: Replace=true
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 5
+      securityContext: {}
+      containers:
+        - resources:
+            limits:
+              memory: 200Mi
+              cpu: 500m
+            requests:
+              memory: 100Mi
+              cpu: 100m
+          name: example
+          command: ["/bin/bash"]
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+          image: registry.redhat.io/ubi9/ubi:latest
+          args:
+            - '-c'
+            - |
+              echo Container is Running
+              date --rfc-email
 
