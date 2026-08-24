@@ -4,7 +4,7 @@ metadata:
   name: job-example
   annotations:
     argocd.argoproj.io/sync-wave: "8"
-    argocd.argoproj.io/sync-options: Replace=true
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
 spec:
   backoffLimit: 0
   template:
